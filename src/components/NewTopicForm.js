@@ -1,13 +1,16 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
-import ROUTES from "../app/routes";
-import { ALL_ICONS } from "../data/icons";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import ROUTES from '../app/routes';
+import { ALL_ICONS } from '../data/icons';
+import { addTopic } from '../features/topics/topicsSlice';
 
 export default function NewTopicForm() {
-  const [name, setName] = useState("");
-  const [icon, setIcon] = useState("");
+  const [name, setName] = useState('');
+  const [icon, setIcon] = useState('');
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,6 +18,13 @@ export default function NewTopicForm() {
       return;
     }
 
+    const topic = {
+      id: uuidv4(),
+      name,
+      icon,
+    };
+
+    dispatch(addTopic(topic));
     // dispatch your add topic action here
     history.push(ROUTES.topicsRoute());
   };
@@ -22,21 +32,21 @@ export default function NewTopicForm() {
   return (
     <section>
       <form onSubmit={handleSubmit}>
-        <h1 className="center">Create a new topic</h1>
-        <div className="form-section">
+        <h1 className='center'>Create a new topic</h1>
+        <div className='form-section'>
           <input
-            id="topic-name"
-            type="text"
+            id='topic-name'
+            type='text'
             value={name}
             onChange={(e) => setName(e.currentTarget.value)}
-            placeholder="Topic Name"
+            placeholder='Topic Name'
           />
           <select
             onChange={(e) => setIcon(e.currentTarget.value)}
             required
-            defaultValue="default"
+            defaultValue='default'
           >
-            <option value="default" disabled hidden>
+            <option value='default' disabled hidden>
               Choose an icon
             </option>
             {ALL_ICONS.map(({ name, url }) => (
@@ -46,7 +56,7 @@ export default function NewTopicForm() {
             ))}
           </select>
         </div>
-        <button className="center">Add Topic</button>
+        <button className='center'>Add Topic</button>
       </form>
     </section>
   );
