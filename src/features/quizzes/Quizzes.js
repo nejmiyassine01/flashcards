@@ -1,7 +1,8 @@
+import React from "react";
 import { useSelector } from "react-redux";
+import { selectAllQuizzes } from "./QuizzesSlice";
 import { Link } from "react-router-dom";
 import ROUTES from "../../app/routes";
-import { selectAllQuizzes } from "./QuizzesSlice";
 
 export default function Quizzes() {
   const quizzes = useSelector(selectAllQuizzes);

@@ -7,10 +7,10 @@ import { ALL_ICONS } from '../data/icons';
 import { addTopic } from '../features/topics/TopicsSlice';
 
 export default function NewTopicForm() {
+  const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [icon, setIcon] = useState('');
   const history = useHistory();
-  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,13 +18,7 @@ export default function NewTopicForm() {
       return;
     }
 
-    const topic = {
-      id: uuidv4(),
-      name,
-      icon,
-    };
-
-    dispatch(addTopic(topic));
+    dispatch(addTopic({ id: uuidv4(), name, icon }));
     // dispatch your add topic action here
     history.push(ROUTES.topicsRoute());
   };

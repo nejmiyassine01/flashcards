@@ -1,13 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  cards: {
-    1: {
-      id: 1,
-      front: "Front of card",
-      back: "Back of card"
-    }
-  }
+  cards: {}
 };
 
 const cardsOptions = {
@@ -15,14 +9,8 @@ const cardsOptions = {
   initialState,
   reducers: {
     addCard: (state, action) => {
-      const card = {
-        [action.payload.id]: {
-          id: action.payload.id,
-          front: action.payload.front,
-          back: action.payload.back
-        }
-      };
-      Object.assign(state.cards, card);
+      const { id } = action.payload;
+      state.cards[id] = action.payload;
     }
   }
 };
@@ -30,8 +18,6 @@ const cardsOptions = {
 const cardsSlice = createSlice(cardsOptions);
 
 export const selectAllCards = (state) => state.cards.cards;
-
 const { actions, reducer } = cardsSlice;
 export const { addCard } = actions;
-
 export default reducer;
